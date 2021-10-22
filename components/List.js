@@ -22,7 +22,7 @@ const List = ({ name, tasks, onCreateTask }) => {
   }, [isCreating]);
 
   return (
-    <Box bgColor="gray.600" minW={300} borderRadius={5} overflow="hidden">
+    <Box bgColor="gray.600" minW={300} height="fit-content" borderRadius={5} overflow="hidden">
       <Box p={2}>
         <Text fontWeight="500" fontSize="md" color="whiteAlpha.900">
           {name}
