@@ -9,7 +9,7 @@ const BoardPage = () => {
 
   return (
     <Box w="100%" h="100%" p={25} bgColor="gray.900">
-      <Navbar />
+      <Navbar boardId={id} />
       <Board boardId={id} />
     </Box>
   );

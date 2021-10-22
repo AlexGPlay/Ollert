@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { generateRandomId } from "../util/generateRandomId";
 import { useLocalStorage } from "./useLocalStorage";
 
@@ -27,5 +27,15 @@ export const useBoards = () => {
     return newId;
   };
 
-  return { boards, addBoard };
+  const boardsWithTitle = useMemo(
+    () =>
+      boards?.map((board) => {
+        const boardData = JSON.parse(getItem(`board_${board}`));
+        const title = boardData.title;
+        return { id: board, title };
+      }) || [],
+    [boards]
+  );
+
+  return { boards, boardsWithTitle, addBoard };
 };
