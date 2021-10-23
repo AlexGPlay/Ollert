@@ -15,7 +15,7 @@ const Navbar = ({ boardId }) => {
       <Box ml={5}>
         <Select
           bgColor="whiteAlpha.800"
-          placeholder="Pick a board"
+          placeholder={boardId ? "Home" : "Pick a board"}
           value={boardId}
           onChange={(evt) =>
             evt.target.value && evt.target.value.length !== 0

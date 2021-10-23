@@ -25,10 +25,18 @@ export const useBoard = (boardId) => {
     setBoardDataInternalFn(newData);
   };
 
+  const removeItemFromList = (listId, taskIdx) => {
+    const newData = { ...boardData };
+    newData.lists = newData.lists.map((list) =>
+      list.id !== listId ? list : { ...list, tasks: list.tasks.filter((_, idx) => idx !== taskIdx) }
+    );
+    setBoardDataInternalFn(newData);
+  };
+
   const setBoardDataInternalFn = (boardData) => {
     setBoardData(boardData);
     setItem(`board_${boardId}`, JSON.stringify(boardData));
   };
 
-  return { boardData, addList, addItemToList };
+  return { boardData, addList, addItemToList, removeItemFromList };
 };

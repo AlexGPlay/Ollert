@@ -5,7 +5,7 @@ import { Textarea } from "@chakra-ui/textarea";
 import { useEffect, useRef, useState } from "react";
 import Task from "./Task";
 
-const List = ({ name, tasks, onCreateTask }) => {
+const List = ({ name, tasks, onCreateTask, onRemoveTask }) => {
   const [isCreating, setCreating] = useState(false);
   const [newTaskText, setNewTaskText] = useState("");
   const textAreaRef = useRef();
@@ -32,7 +32,7 @@ const List = ({ name, tasks, onCreateTask }) => {
         <Box p={2}>
           <Stack>
             {tasks.map((text, idx) => (
-              <Task text={text} key={idx} />
+              <Task text={text} onDeleteClick={() => onRemoveTask(idx)} key={idx} />
             ))}
           </Stack>
         </Box>
