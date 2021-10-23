@@ -70,6 +70,23 @@ export const useBoard = (boardId) => {
     setBoardDataInternalFn(newData);
   };
 
+  const changeTaskList = (taskId, currentListId, toListId) => {
+    const newData = { ...boardData };
+
+    const task = newData.lists
+      .find((list) => list.id === currentListId)
+      ?.tasks.find((task) => task.id === taskId);
+
+    newData.lists = newData.lists.map((list) => {
+      if (list.id !== currentListId && list.id !== toListId) return list;
+      if (list.id === currentListId)
+        return { ...list, tasks: list.tasks.filter((task) => task.id !== taskId) };
+      return { ...list, tasks: [...list.tasks, task] };
+    });
+
+    setBoardDataInternalFn(newData);
+  };
+
   const removeList = (listId) => {
     const newData = { ...boardData };
     newData.lists = newData.lists.filter((list) => list.id !== listId);
@@ -111,5 +128,6 @@ export const useBoard = (boardId) => {
     editList,
     reorderList,
     reorderBoard,
+    changeTaskList,
   };
 };

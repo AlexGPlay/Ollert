@@ -4,10 +4,10 @@ import { Box, Text } from "@chakra-ui/layout";
 import { useRef, useState } from "react";
 import { useTaskReorder } from "../hooks/useReorder";
 
-const Task = ({ id, text, onEditClick, onDeleteClick, index, onMove }) => {
+const Task = ({ id, text, listId, onEditClick, onDeleteClick, index, onMove }) => {
   const taskRef = useRef();
   const [hover, setHover] = useState();
-  const { isDragging } = useTaskReorder(taskRef, id, index, onMove);
+  const { isDragging } = useTaskReorder(taskRef, id, index, listId, onMove);
 
   return (
     <Box

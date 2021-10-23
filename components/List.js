@@ -7,6 +7,7 @@ import Task from "./Task";
 import TaskEditor from "./TaskEditor";
 import ListEditor from "./ListEditor.js";
 import { useListReorder } from "../hooks/useReorder";
+import { useMoveTask } from "../hooks/useMoveTask";
 
 const List = ({
   name,
@@ -20,6 +21,7 @@ const List = ({
   onRemove,
   onEdit,
   onTaskMove,
+  onTaskLeave,
 }) => {
   const [editTaskList, setEditTaskList] = useState([]);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -28,6 +30,7 @@ const List = ({
 
   const listRef = useRef();
   const { isDragging } = useListReorder(listRef, id, index, onMove);
+  useMoveTask(listRef, id, onTaskLeave);
 
   return (
     <Box
@@ -85,6 +88,7 @@ const List = ({
                   id={task.id}
                   text={task.text}
                   onDeleteClick={() => onRemoveTask(task.id)}
+                  listId={id}
                   key={task.id}
                   index={idx}
                   onEditClick={() => setEditTaskList((taskList) => [...taskList, task.id])}

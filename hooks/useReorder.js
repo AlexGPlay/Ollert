@@ -1,6 +1,6 @@
 import { useDrag, useDrop } from "react-dnd";
 
-export const useTaskReorder = (taskRef, id, index, onMove) => {
+export const useTaskReorder = (taskRef, id, index, listId, onMove) => {
   const [, drop] = useDrop({
     accept: "task",
     collect(monitor) {
@@ -16,7 +16,7 @@ export const useTaskReorder = (taskRef, id, index, onMove) => {
 
   const [{ isDragging }, drag] = useDrag({
     type: "task",
-    item: () => ({ index, id }),
+    item: () => ({ index, id, listId }),
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
 
