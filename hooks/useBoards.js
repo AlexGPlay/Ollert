@@ -5,6 +5,7 @@ import { useLocalStorage } from "./useLocalStorage";
 export const useBoards = () => {
   const { getItem, setItem, removeItem } = useLocalStorage();
   const [boards, setBoards] = useState();
+  const [, setUpdateHack] = useState(0);
 
   useEffect(() => {
     const boards = getItem("boards")?.split(",") || [];
@@ -36,6 +37,7 @@ export const useBoards = () => {
   const editBoardName = (boardId, boardName) => {
     const currentBoard = JSON.parse(getItem(`board_${boardId}`));
     setItem(`board_${boardId}`, JSON.stringify({ ...currentBoard, title: boardName }));
+    setUpdateHack((currentValue) => currentValue + 1);
   };
 
   const boardsWithTitle =
