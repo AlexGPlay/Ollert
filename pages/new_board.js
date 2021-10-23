@@ -19,7 +19,7 @@ const newBoard = () => {
   };
 
   return (
-    <Box w="100%" h="100%" p={25} bgColor="gray.900">
+    <Box overflow="auto" w="100%" h="100%" p={25} bgColor="gray.900">
       <Navbar />
       <Flex>
         <Box mt={25} bgColor="gray.600" borderRadius={5} overflow="hidden" p={2}>

@@ -8,7 +8,7 @@ const BoardPage = () => {
   const { id } = router.query;
 
   return (
-    <Box w="100%" h="100%" p={25} bgColor="gray.900">
+    <Box overflow="auto" w="100%" h="100%" p={25} bgColor="gray.900">
       <Navbar boardId={id} />
       <Board boardId={id} />
     </Box>

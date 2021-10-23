@@ -13,7 +13,7 @@ export default function Home() {
   if (boards?.length === 0) router.push("/new_board");
 
   return (
-    <Box w="100%" h="100%" p={25} bgColor="gray.900">
+    <Box w="100%" h="100%" overflow="auto" p={25} bgColor="gray.900">
       <Navbar />
       <Flex mt={25}>
         <Wrap>
