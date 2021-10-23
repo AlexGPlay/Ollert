@@ -9,7 +9,7 @@ const Navbar = ({ boardId }) => {
 
   return (
     <Flex w="100%" p={2} borderRadius={5} bgColor="gray.600">
-      <Text fontSize="2xl" color="whiteAlpha.900">
+      <Text fontSize="2xl" color="whiteAlpha.900" cursor="pointer" onClick={() => router.push("/")}>
         Ollert
       </Text>
       <Box ml={5}>
