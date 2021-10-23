@@ -33,24 +33,23 @@ export const useBoards = () => {
     setBoards((boards) => boards.filter((board) => board !== boardId));
   };
 
-  const boardsWithTitle = useMemo(
-    () =>
-      boards?.map((board) => {
-        const boardData = JSON.parse(getItem(`board_${board}`));
-        const title = boardData.title;
-        return { id: board, title };
-      }) || [],
-    [boards]
-  );
+  const editBoardName = (boardId, boardName) => {
+    const currentBoard = JSON.parse(getItem(`board_${boardId}`));
+    setItem(`board_${boardId}`, JSON.stringify({ ...currentBoard, title: boardName }));
+  };
 
-  const boardsWithData = useMemo(
-    () =>
-      boards?.map((board) => {
-        const boardData = JSON.parse(getItem(`board_${board}`));
-        return boardData;
-      }) || [],
-    [boards]
-  );
+  const boardsWithTitle =
+    boards?.map((board) => {
+      const boardData = JSON.parse(getItem(`board_${board}`));
+      const title = boardData.title;
+      return { id: board, title };
+    }) || [];
 
-  return { boards, boardsWithTitle, boardsWithData, addBoard, removeBoard };
+  const boardsWithData =
+    boards?.map((board) => {
+      const boardData = JSON.parse(getItem(`board_${board}`));
+      return boardData;
+    }) || [];
+
+  return { boards, boardsWithTitle, boardsWithData, addBoard, removeBoard, editBoardName };
 };

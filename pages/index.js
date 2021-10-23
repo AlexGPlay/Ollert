@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import { useBoards } from "../hooks/useBoards";
 
 export default function Home() {
-  const { boards, boardsWithData, removeBoard } = useBoards();
+  const { boards, boardsWithData, removeBoard, editBoardName } = useBoards();
   const router = useRouter();
 
   if (boards?.length === 0) router.push("/new_board");
@@ -18,7 +18,12 @@ export default function Home() {
       <Flex mt={25}>
         <Wrap>
           {boardsWithData.map((board) => (
-            <BoardPreview key={board.id} {...board} onRemove={() => removeBoard(board.id)} />
+            <BoardPreview
+              key={board.id}
+              {...board}
+              onRemove={() => removeBoard(board.id)}
+              onEdit={(newName) => editBoardName(board.id, newName)}
+            />
           ))}
           <Button
             colorScheme="blue"

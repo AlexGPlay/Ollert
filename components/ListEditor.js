@@ -1,7 +1,7 @@
 import { Button, IconButton } from "@chakra-ui/button";
 import { CloseIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/input";
-import { Flex, Text, Wrap } from "@chakra-ui/layout";
+import { Wrap } from "@chakra-ui/layout";
 import { useState } from "react";
 
 const ListEditor = ({ name, onCancel, onSubmit }) => {
