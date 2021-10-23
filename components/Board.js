@@ -15,6 +15,7 @@ const Board = ({ boardId }) => {
     editItemFromList,
     removeList,
     editList,
+    reorderList,
   } = useBoard(boardId);
 
   const [isCreatingList, setCreatingList] = useState(false);
@@ -40,6 +41,7 @@ const Board = ({ boardId }) => {
             onEditTask={(taskIdx, newText) => editItemFromList(list.id, taskIdx, newText)}
             onRemove={() => removeList(list.id)}
             onEdit={(newName) => editList(list.id, newName)}
+            onTaskMove={(task1Idx, task2Idx) => reorderList(list.id, task1Idx, task2Idx)}
           />
         ))}
         {isCreatingList ? (

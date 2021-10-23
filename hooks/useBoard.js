@@ -46,6 +46,24 @@ export const useBoard = (boardId) => {
     setBoardDataInternalFn(newData);
   };
 
+  const reorderList = (listId, task1Idx, task2Idx) => {
+    const newData = { ...boardData };
+
+    newData.lists = newData.lists.map((list) => {
+      if (list.id !== listId) return list;
+
+      const task1 = list.tasks[task1Idx];
+      const task2 = list.tasks[task2Idx];
+
+      list.tasks[task2Idx] = task1;
+      list.tasks[task1Idx] = task2;
+
+      return list;
+    });
+
+    setBoardDataInternalFn(newData);
+  };
+
   const removeList = (listId) => {
     const newData = { ...boardData };
     newData.lists = newData.lists.filter((list) => list.id !== listId);
@@ -73,5 +91,6 @@ export const useBoard = (boardId) => {
     editItemFromList,
     removeList,
     editList,
+    reorderList,
   };
 };

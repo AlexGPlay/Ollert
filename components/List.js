@@ -7,7 +7,16 @@ import Task from "./Task";
 import TaskEditor from "./TaskEditor";
 import ListEditor from "./ListEditor.js";
 
-const List = ({ name, tasks, onCreateTask, onRemoveTask, onEditTask, onRemove, onEdit }) => {
+const List = ({
+  name,
+  tasks,
+  onCreateTask,
+  onRemoveTask,
+  onEditTask,
+  onRemove,
+  onEdit,
+  onTaskMove,
+}) => {
   const [editTaskList, setEditTaskList] = useState([]);
   const [isEditingName, setIsEditingName] = useState(false);
   const [isCreating, setCreating] = useState(false);
@@ -66,7 +75,9 @@ const List = ({ name, tasks, onCreateTask, onRemoveTask, onEditTask, onRemove, o
                   text={text}
                   onDeleteClick={() => onRemoveTask(idx)}
                   key={idx}
+                  index={idx}
                   onEditClick={() => setEditTaskList((taskList) => [...taskList, idx])}
+                  onMove={onTaskMove}
                 />
               )
             )}
