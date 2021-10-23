@@ -37,5 +37,14 @@ export const useBoards = () => {
     [boards]
   );
 
-  return { boards, boardsWithTitle, addBoard };
+  const boardsWithData = useMemo(
+    () =>
+      boards?.map((board) => {
+        const boardData = JSON.parse(getItem(`board_${board}`));
+        return boardData;
+      }) || [],
+    [boards]
+  );
+
+  return { boards, boardsWithTitle, boardsWithData, addBoard };
 };
