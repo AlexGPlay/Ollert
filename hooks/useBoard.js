@@ -46,10 +46,32 @@ export const useBoard = (boardId) => {
     setBoardDataInternalFn(newData);
   };
 
+  const removeList = (listId) => {
+    const newData = { ...boardData };
+    newData.lists = newData.lists.filter((list) => list.id !== listId);
+    setBoardDataInternalFn(newData);
+  };
+
+  const editList = (listId, newListName) => {
+    const newData = { ...boardData };
+    newData.lists = newData.lists.map((list) =>
+      list.id !== listId ? list : { ...list, name: newListName }
+    );
+    setBoardDataInternalFn(newData);
+  };
+
   const setBoardDataInternalFn = (boardData) => {
     setBoardData(boardData);
     setItem(`board_${boardId}`, JSON.stringify(boardData));
   };
 
-  return { boardData, addList, addItemToList, removeItemFromList, editItemFromList };
+  return {
+    boardData,
+    addList,
+    addItemToList,
+    removeItemFromList,
+    editItemFromList,
+    removeList,
+    editList,
+  };
 };
