@@ -7,7 +7,8 @@ import { useBoard } from "../hooks/useBoard";
 import List from "./List";
 
 const Board = ({ boardId }) => {
-  const { boardData, addList, addItemToList, removeItemFromList } = useBoard(boardId);
+  const { boardData, addList, addItemToList, removeItemFromList, editItemFromList } =
+    useBoard(boardId);
 
   const [isCreatingList, setCreatingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
@@ -29,6 +30,7 @@ const Board = ({ boardId }) => {
             tasks={list.tasks}
             onCreateTask={(task) => addItemToList(list.id, task)}
             onRemoveTask={(taskIdx) => removeItemFromList(list.id, taskIdx)}
+            onEditTask={(taskIdx, newText) => editItemFromList(list.id, taskIdx, newText)}
           />
         ))}
         {isCreatingList ? (

@@ -1,9 +1,9 @@
 import { IconButton } from "@chakra-ui/button";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/layout";
 import { useState } from "react";
 
-const Task = ({ text, onDeleteClick }) => {
+const Task = ({ text, onEditClick, onDeleteClick }) => {
   const [hover, setHover] = useState();
 
   return (
@@ -17,6 +17,7 @@ const Task = ({ text, onDeleteClick }) => {
     >
       {hover && (
         <Box position="absolute" top={1} right={1}>
+          <IconButton mr={1} onClick={onEditClick} size="xs" icon={<EditIcon />} />
           <IconButton onClick={onDeleteClick} size="xs" icon={<DeleteIcon />} />
         </Box>
       )}

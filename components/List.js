@@ -1,25 +1,13 @@
-import { Button, IconButton } from "@chakra-ui/button";
-import { AddIcon, CloseIcon } from "@chakra-ui/icons";
-import { Box, Flex, Spacer, Stack, Text, Wrap } from "@chakra-ui/layout";
-import { Textarea } from "@chakra-ui/textarea";
-import { useEffect, useRef, useState } from "react";
+import { Button } from "@chakra-ui/button";
+import { AddIcon } from "@chakra-ui/icons";
+import { Box, Stack, Text } from "@chakra-ui/layout";
+import { useState } from "react";
 import Task from "./Task";
+import TaskEditor from "./TaskEditor";
 
-const List = ({ name, tasks, onCreateTask, onRemoveTask }) => {
+const List = ({ name, tasks, onCreateTask, onRemoveTask, onEditTask }) => {
+  const [editTaskList, setEditTaskList] = useState([]);
   const [isCreating, setCreating] = useState(false);
-  const [newTaskText, setNewTaskText] = useState("");
-  const textAreaRef = useRef();
-
-  const handleCreateTask = (evt) => {
-    evt?.preventDefault();
-    setCreating(false);
-    setNewTaskText("");
-    onCreateTask(newTaskText);
-  };
-
-  useEffect(() => {
-    if (isCreating) textAreaRef.current?.focus();
-  }, [isCreating]);
 
   return (
     <Box bgColor="gray.600" minW={300} height="fit-content" borderRadius={5} overflow="hidden">
@@ -31,43 +19,39 @@ const List = ({ name, tasks, onCreateTask, onRemoveTask }) => {
       {tasks?.length > 0 && (
         <Box p={2}>
           <Stack>
-            {tasks.map((text, idx) => (
-              <Task text={text} onDeleteClick={() => onRemoveTask(idx)} key={idx} />
-            ))}
+            {tasks.map((text, idx) =>
+              editTaskList.includes(idx) ? (
+                <TaskEditor
+                  taskText={text}
+                  onTaskEditorCancel={() =>
+                    setEditTaskList((taskList) => taskList.filter((taskIdx) => taskIdx !== idx))
+                  }
+                  onTaskSubmit={(text) => {
+                    onEditTask(idx, text);
+                    setEditTaskList((taskList) => taskList.filter((taskIdx) => taskIdx !== idx));
+                  }}
+                />
+              ) : (
+                <Task
+                  text={text}
+                  onDeleteClick={() => onRemoveTask(idx)}
+                  key={idx}
+                  onEditClick={() => setEditTaskList((taskList) => [...taskList, idx])}
+                />
+              )
+            )}
           </Stack>
         </Box>
       )}
       <Box p={2}>
         {isCreating ? (
-          <form onSubmit={handleCreateTask}>
-            <Textarea
-              resize="none"
-              fontSize="sm"
-              bgColor="whiteAlpha.800"
-              ref={textAreaRef}
-              value={newTaskText}
-              placeholder="Write your new task text"
-              onKeyPress={(evt) => evt.code === "Enter" && handleCreateTask(evt)}
-              onChange={(evt) => setNewTaskText(evt.target.value)}
-            />
-            <Flex mt={2}>
-              <Wrap spacing={2}>
-                <Button colorScheme="blue" type="submit">
-                  Add task
-                </Button>
-                <IconButton
-                  variant="ghost"
-                  colorScheme="whiteAlpha"
-                  color="whiteAlpha.800"
-                  onClick={() => {
-                    setNewTaskText("");
-                    setCreating(false);
-                  }}
-                  icon={<CloseIcon />}
-                />
-              </Wrap>
-            </Flex>
-          </form>
+          <TaskEditor
+            onTaskSubmit={(taskText) => {
+              onCreateTask(taskText);
+              setCreating(false);
+            }}
+            onTaskEditorCancel={() => setCreating(false)}
+          />
         ) : (
           <Button
             p={2}
