@@ -1,9 +1,23 @@
-import { Flex, Wrap, Text, Box } from "@chakra-ui/layout";
+import { IconButton } from "@chakra-ui/button";
+import { InfoIcon } from "@chakra-ui/icons";
+import { Flex, Text, Box } from "@chakra-ui/layout";
 import { Select } from "@chakra-ui/select";
 import { useRouter } from "next/router";
 import { useBoards } from "../hooks/useBoards";
+import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
+import {
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/modal";
 
 const Navbar = ({ boardId }) => {
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const { boardsWithTitle } = useBoards();
   const router = useRouter();
 
@@ -30,6 +44,34 @@ const Navbar = ({ boardId }) => {
           ))}
         </Select>
       </Box>
+      <Box ml="auto">
+        <IconButton
+          bgColor="transparent"
+          colorScheme="whiteAlpha"
+          color="white"
+          onClick={() => window.open("https://github.com/AlexGPlay/Ollert", "_blank")}
+          icon={<FaGithub />}
+        />
+        <IconButton
+          bgColor="transparent"
+          colorScheme="whiteAlpha"
+          color="white"
+          onClick={() => setIsInfoOpen(true)}
+          icon={<InfoIcon />}
+        />
+      </Box>
+      <Modal isOpen={isInfoOpen} onClose={() => setIsInfoOpen(false)}>
+        <ModalOverlay />
+        <ModalContent bgColor="gray.700" color="whiteAlpha.900">
+          <ModalHeader>Info</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Ollert is a Trello clone built with NextJS, Chakra UI and React DnD. It stores all the
+            info on local storage, there is no backend server.
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   );
 };
