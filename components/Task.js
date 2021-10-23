@@ -4,7 +4,7 @@ import { Box, Text } from "@chakra-ui/layout";
 import { useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 
-const Task = ({ text, onEditClick, onDeleteClick, index, onMove }) => {
+const Task = ({ id, text, onEditClick, onDeleteClick, index, onMove }) => {
   const taskRef = useRef();
   const [hover, setHover] = useState();
   const [{ handlerId }, drop] = useDrop({
@@ -36,7 +36,7 @@ const Task = ({ text, onEditClick, onDeleteClick, index, onMove }) => {
 
   const [{ isDragging }, drag] = useDrag({
     type: "task",
-    item: () => ({ index, id: index }),
+    item: () => ({ index, id }),
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
 
@@ -44,7 +44,8 @@ const Task = ({ text, onEditClick, onDeleteClick, index, onMove }) => {
 
   return (
     <Box
-      bgColor={isDragging ? "black" : "whiteAlpha.800"}
+      bgColor="whiteAlpha.800"
+      opacity={isDragging ? 0 : 1}
       borderRadius={5}
       p={2}
       onMouseOver={() => setHover(true)}

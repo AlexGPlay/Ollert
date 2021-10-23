@@ -58,25 +58,27 @@ const List = ({
       {tasks?.length > 0 && (
         <Box p={2}>
           <Stack>
-            {tasks.map((text, idx) =>
-              editTaskList.includes(idx) ? (
+            {tasks.map((task, idx) =>
+              editTaskList.includes(task.id) ? (
                 <TaskEditor
-                  taskText={text}
+                  key={task.id}
+                  taskText={task.text}
                   onTaskEditorCancel={() =>
-                    setEditTaskList((taskList) => taskList.filter((taskIdx) => taskIdx !== idx))
+                    setEditTaskList((taskList) => taskList.filter((taskId) => taskId !== task.id))
                   }
                   onTaskSubmit={(text) => {
-                    onEditTask(idx, text);
-                    setEditTaskList((taskList) => taskList.filter((taskIdx) => taskIdx !== idx));
+                    onEditTask(task.id, text);
+                    setEditTaskList((taskList) => taskList.filter((taskId) => taskId !== task.id));
                   }}
                 />
               ) : (
                 <Task
-                  text={text}
-                  onDeleteClick={() => onRemoveTask(idx)}
-                  key={idx}
+                  id={task.id}
+                  text={task.text}
+                  onDeleteClick={() => onRemoveTask(task.id)}
+                  key={task.id}
                   index={idx}
-                  onEditClick={() => setEditTaskList((taskList) => [...taskList, idx])}
+                  onEditClick={() => setEditTaskList((taskList) => [...taskList, task.id])}
                   onMove={onTaskMove}
                 />
               )

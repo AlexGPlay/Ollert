@@ -20,27 +20,33 @@ export const useBoard = (boardId) => {
   const addItemToList = (listId, text) => {
     const newData = { ...boardData };
     newData.lists = newData.lists.map((list) =>
-      list.id !== listId ? list : { ...list, tasks: [...list.tasks, text] }
+      list.id !== listId
+        ? list
+        : { ...list, tasks: [...list.tasks, { id: generateRandomId(), text }] }
     );
     setBoardDataInternalFn(newData);
   };
 
-  const removeItemFromList = (listId, taskIdx) => {
+  const removeItemFromList = (listId, taskId) => {
     const newData = { ...boardData };
     newData.lists = newData.lists.map((list) =>
-      list.id !== listId ? list : { ...list, tasks: list.tasks.filter((_, idx) => idx !== taskIdx) }
+      list.id !== listId
+        ? list
+        : { ...list, tasks: list.tasks.filter((task) => task.id !== taskId) }
     );
     setBoardDataInternalFn(newData);
   };
 
-  const editItemFromList = (listId, taskIdx, newText) => {
+  const editItemFromList = (listId, taskId, newText) => {
     const newData = { ...boardData };
     newData.lists = newData.lists.map((list) =>
       list.id !== listId
         ? list
         : {
             ...list,
-            tasks: list.tasks.map((currentText, idx) => (idx !== taskIdx ? currentText : newText)),
+            tasks: list.tasks.map((task) =>
+              task.id !== taskId ? task : { ...task, text: newText }
+            ),
           }
     );
     setBoardDataInternalFn(newData);
