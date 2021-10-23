@@ -5,7 +5,7 @@ import { useLocalStorage } from "./useLocalStorage";
 export const useBoards = () => {
   const { getItem, setItem, removeItem } = useLocalStorage();
   const [boards, setBoards] = useState();
-  const [, setUpdateHack] = useState(0);
+  const [updateHack, setUpdateHack] = useState(0);
 
   useEffect(() => {
     const boards = getItem("boards")?.split(",") || [];
@@ -40,18 +40,24 @@ export const useBoards = () => {
     setUpdateHack((currentValue) => currentValue + 1);
   };
 
-  const boardsWithTitle =
-    boards?.map((board) => {
-      const boardData = JSON.parse(getItem(`board_${board}`));
-      const title = boardData.title;
-      return { id: board, title };
-    }) || [];
+  const boardsWithTitle = useMemo(
+    () =>
+      boards?.map((board) => {
+        const boardData = JSON.parse(getItem(`board_${board}`));
+        const title = boardData.title;
+        return { id: board, title };
+      }) || [],
+    [boards, updateHack]
+  );
 
-  const boardsWithData =
-    boards?.map((board) => {
-      const boardData = JSON.parse(getItem(`board_${board}`));
-      return boardData;
-    }) || [];
+  const boardsWithData = useMemo(
+    () =>
+      boards?.map((board) => {
+        const boardData = JSON.parse(getItem(`board_${board}`));
+        return boardData;
+      }) || [],
+    [boards, updateHack]
+  );
 
   return { boards, boardsWithTitle, boardsWithData, addBoard, removeBoard, editBoardName };
 };
