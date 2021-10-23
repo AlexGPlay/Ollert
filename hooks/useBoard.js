@@ -84,6 +84,18 @@ export const useBoard = (boardId) => {
     setBoardDataInternalFn(newData);
   };
 
+  const reorderBoard = (list1Idx, list2Idx) => {
+    const newData = { ...boardData };
+
+    const list1 = newData.lists[list1Idx];
+    const list2 = newData.lists[list2Idx];
+
+    newData.lists[list1Idx] = list2;
+    newData.lists[list2Idx] = list1;
+
+    setBoardData(newData);
+  };
+
   const setBoardDataInternalFn = (boardData) => {
     setBoardData(boardData);
     setItem(`board_${boardId}`, JSON.stringify(boardData));
@@ -98,5 +110,6 @@ export const useBoard = (boardId) => {
     removeList,
     editList,
     reorderList,
+    reorderBoard,
   };
 };

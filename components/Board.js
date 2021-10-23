@@ -16,6 +16,7 @@ const Board = ({ boardId }) => {
     removeList,
     editList,
     reorderList,
+    reorderBoard,
   } = useBoard(boardId);
 
   const [isCreatingList, setCreatingList] = useState(false);
@@ -31,17 +32,20 @@ const Board = ({ boardId }) => {
   return (
     <Flex mt={25}>
       <Wrap spacing={5}>
-        {boardData?.lists?.map((list) => (
+        {boardData?.lists?.map((list, idx) => (
           <List
             key={list.id}
             name={list.name}
             tasks={list.tasks}
+            id={list.id}
+            index={idx}
             onCreateTask={(task) => addItemToList(list.id, task)}
             onRemoveTask={(taskIdx) => removeItemFromList(list.id, taskIdx)}
             onEditTask={(taskIdx, newText) => editItemFromList(list.id, taskIdx, newText)}
             onRemove={() => removeList(list.id)}
             onEdit={(newName) => editList(list.id, newName)}
             onTaskMove={(task1Idx, task2Idx) => reorderList(list.id, task1Idx, task2Idx)}
+            onMove={(list1Idx, list2Idx) => reorderBoard(list1Idx, list2Idx)}
           />
         ))}
         {isCreatingList ? (

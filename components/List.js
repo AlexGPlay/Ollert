@@ -2,13 +2,17 @@ import { Button, IconButton } from "@chakra-ui/button";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/input";
 import { Box, Stack, Text, Flex } from "@chakra-ui/layout";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Task from "./Task";
 import TaskEditor from "./TaskEditor";
 import ListEditor from "./ListEditor.js";
+import { useListReorder } from "../hooks/useReorder";
 
 const List = ({
   name,
+  id,
+  index,
+  onMove,
   tasks,
   onCreateTask,
   onRemoveTask,
@@ -22,8 +26,13 @@ const List = ({
   const [isCreating, setCreating] = useState(false);
   const [hover, setHover] = useState(false);
 
+  const listRef = useRef();
+  const { isDragging } = useListReorder(listRef, id, index, onMove);
+
   return (
     <Box
+      ref={listRef}
+      opacity={isDragging ? 0 : 1}
       bgColor="gray.600"
       minW={300}
       height="fit-content"

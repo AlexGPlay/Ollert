@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/button";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/layout";
 import { useRef, useState } from "react";
-import { useTaskReorder } from "../hooks/useTaskReorder";
+import { useTaskReorder } from "../hooks/useReorder";
 
 const Task = ({ id, text, onEditClick, onDeleteClick, index, onMove }) => {
   const taskRef = useRef();
