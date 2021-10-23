@@ -21,13 +21,13 @@ const BoardPreview = ({ id, title, lists }) => {
       </Text>
       <Flex mt={5} bgColor="gray.300" borderRadius={5} p={2} width="100%" flex={1}>
         <Wrap>
-          {lists.map((list) => (
+          {lists.slice(0, 4).map((list) => (
             <Box bgColor="gray.500" p={2} borderRadius={5} height="fit-content">
               <Text fontSize="md" color="whiteAlpha.900">
                 {list.name}
               </Text>
               <Flex flexDir="column" alignItems="center">
-                {new Array(list.tasks.length).fill(0).map(() => (
+                {new Array(list.tasks.length > 3 ? 3 : list.tasks.length).fill(0).map(() => (
                   <Icon color="whiteAlpha.800" as={HamburgerIcon} />
                 ))}
               </Flex>
