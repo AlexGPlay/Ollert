@@ -3,7 +3,7 @@ import { generateRandomId } from "../util/generateRandomId";
 import { useLocalStorage } from "./useLocalStorage";
 
 export const useBoards = () => {
-  const { getItem, setItem } = useLocalStorage();
+  const { getItem, setItem, removeItem } = useLocalStorage();
   const [boards, setBoards] = useState();
 
   useEffect(() => {
@@ -27,6 +27,12 @@ export const useBoards = () => {
     return newId;
   };
 
+  const removeBoard = (boardId) => {
+    removeItem(`board_${boardId}`);
+    setItem("boards", boards.filter((board) => board !== boardId).join(","));
+    setBoards((boards) => boards.filter((board) => board !== boardId));
+  };
+
   const boardsWithTitle = useMemo(
     () =>
       boards?.map((board) => {
@@ -46,5 +52,5 @@ export const useBoards = () => {
     [boards]
   );
 
-  return { boards, boardsWithTitle, boardsWithData, addBoard };
+  return { boards, boardsWithTitle, boardsWithData, addBoard, removeBoard };
 };

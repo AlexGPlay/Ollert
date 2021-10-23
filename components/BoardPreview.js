@@ -1,10 +1,13 @@
+import { IconButton } from "@chakra-ui/button";
 import Icon from "@chakra-ui/icon";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, HamburgerIcon } from "@chakra-ui/icons";
 import { Box, Text, Flex, Wrap } from "@chakra-ui/layout";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
-const BoardPreview = ({ id, title, lists }) => {
+const BoardPreview = ({ id, title, lists, onRemove }) => {
   const router = useRouter();
+  const [hover, setHover] = useState(false);
 
   return (
     <Box
@@ -14,8 +17,24 @@ const BoardPreview = ({ id, title, lists }) => {
       cursor="pointer"
       minW={200}
       height="fit-content"
+      position="relative"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={() => router.push(`/board/${id}`)}
     >
+      {hover && (
+        <Box position="absolute" top={1} right={1}>
+          <IconButton mr={1} size="xs" icon={<EditIcon />} />
+          <IconButton
+            size="xs"
+            icon={<DeleteIcon />}
+            onClick={(evt) => {
+              evt.stopPropagation();
+              onRemove();
+            }}
+          />
+        </Box>
+      )}
       <Text fontWeight="500" fontSize="md" color="whiteAlpha.900">
         {title}
       </Text>
