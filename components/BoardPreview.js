@@ -93,13 +93,13 @@ const BoardPreview = ({ id, title, lists, onRemove, onEdit }) => {
       <Flex mt={5} bgColor="gray.300" borderRadius={5} p={2} width="100%" flex={1}>
         <Wrap>
           {lists.slice(0, 4).map((list) => (
-            <Box bgColor="gray.500" p={2} borderRadius={5} height="fit-content">
+            <Box key={list.id} bgColor="gray.500" p={2} borderRadius={5} height="fit-content">
               <Text fontSize="md" color="whiteAlpha.900">
                 {list.name}
               </Text>
               <Flex flexDir="column" alignItems="center">
-                {new Array(list.tasks.length > 3 ? 3 : list.tasks.length).fill(0).map(() => (
-                  <Icon color="whiteAlpha.800" as={HamburgerIcon} />
+                {new Array(list.tasks.length > 3 ? 3 : list.tasks.length).fill(0).map((_, idx) => (
+                  <Icon key={idx} color="whiteAlpha.800" as={HamburgerIcon} />
                 ))}
               </Flex>
             </Box>

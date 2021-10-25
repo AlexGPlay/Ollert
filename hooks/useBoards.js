@@ -8,7 +8,7 @@ export const useBoards = () => {
   const [updateHack, setUpdateHack] = useState(0);
 
   useEffect(() => {
-    const boards = getItem("boards")?.split(",") || [];
+    const boards = getItem("boards")?.split(",").filter(Boolean) || [];
     setBoards(boards);
   }, []);
 
