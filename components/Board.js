@@ -2,11 +2,13 @@ import { Button, IconButton } from "@chakra-ui/button";
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import { Input } from "@chakra-ui/input";
 import { Box, Flex, Wrap } from "@chakra-ui/layout";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useBoard } from "../hooks/useBoard";
 import List from "./List";
 
 const Board = ({ boardId }) => {
+  const router = useRouter();
   const {
     boardData,
     addList,
@@ -19,6 +21,8 @@ const Board = ({ boardId }) => {
     reorderBoard,
     changeTaskList,
   } = useBoard(boardId);
+
+  if (!boardData) router.push("/not_found");
 
   const [isCreatingList, setCreatingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState("");
