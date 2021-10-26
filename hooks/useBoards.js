@@ -44,9 +44,10 @@ export const useBoards = () => {
     () =>
       boards?.map((board) => {
         const boardData = JSON.parse(getItem(`board_${board}`));
+        if(!boardData) return null;
         const title = boardData.title;
         return { id: board, title };
-      }) || [],
+      }).filter(Boolean) || [],
     [boards, updateHack]
   );
 
@@ -54,8 +55,9 @@ export const useBoards = () => {
     () =>
       boards?.map((board) => {
         const boardData = JSON.parse(getItem(`board_${board}`));
+        if(!boardData) return null;
         return boardData;
-      }) || [],
+      }).filter(Boolean) || [],
     [boards, updateHack]
   );
 
